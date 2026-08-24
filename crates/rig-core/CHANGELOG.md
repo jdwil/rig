@@ -76,6 +76,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [sergiomeneses](https://github.com/sergiomeneses)
 * [rleisti](https://github.com/rleisti)
 
+### Added
+
+- *(openai)* `ResponsesProviderExt::PROVIDER_NAME` for GenAI telemetry (default
+  `"openai"`). OpenAI-compatible backends can report a different provider name
+  on Responses spans (streaming and non-streaming).
+
+### Fixed
+
+- *(openai)* Accept float `created_at` values when deserializing Responses API
+  payloads (truncate toward zero). Needed for Bedrock Mantle and other
+  OpenAI-compatible hosts that emit timestamps as JSON floats.
+
 ### Changed
 
 - *(deps)* dependency requirements are now floors — the lowest version rig's own code needs (a bare major, or the version that introduced an API rig relies on) — instead of the latest patch at the time of release; Dependabot only moves `Cargo.lock` for in-range releases, and `scripts/check-dependency-floors.py` (CI `dependency-floors`) builds the workspace against the declared floors. The `deranged = "=0.5.8"` exact pin is gone. Downstream users no longer have to `cargo update` unrelated crates to take a rig release ([#2195](https://github.com/0xPlaygrounds/rig/issues/2195)) - #2369
